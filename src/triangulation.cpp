@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <Eigen/Dense>
 #include "triangulation.h"
 
 class Triangulation{
@@ -34,10 +35,21 @@ class Triangulation{
 		 int **neumann;	   // nNeumann x 2
 
 		//methods
-		 Triangulation();
 		 RedRefinement();
 		 Enhance();
-	 
+
+		// constructors
+		 Triangulation();
+
+		// destructor
+		 ~Triangulation()
+			 
  }
 
+// constructors
+Triangulation::Triangulation():{
+
+	size_t
+
+}
 
