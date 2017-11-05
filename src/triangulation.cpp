@@ -19,5 +19,25 @@
 
 #include "triangulation.h"
 
+class Triangulation{
+
+	public:
+		 // attributes
+		 size_t nElts;
+		 size_t nDirichlet;
+		 size_t nNeumann;
+		 
+		 double *xcoords;
+		 double *ycoords;
+		 int **elements;   // nElts x 3
+		 int **dirichlet;  // nDirichlet x 2
+		 int **neumann;	   // nNeumann x 2
+
+		//methods
+		 Triangulation();
+		 RedRefinement();
+		 Enhance();
+	 
+ }
 
 
