@@ -24,9 +24,9 @@ class Triangulation{
 
 	public:
 		 // attributes
-		 size_t nElts;
-		 size_t nDirichlet;
-		 size_t nNeumann;
+		 int nElts;
+		 int nDirichlet;
+		 int nNeumann;
 		 
 		 double *xcoords;
 		 double *ycoords;
@@ -39,7 +39,7 @@ class Triangulation{
 		 Enhance();
 
 		// constructors
-		 Triangulation(Eigen::VectorXd &xCoords, Eigen::VectorXd &yCoords);
+		 Triangulation();
 
 		// destructor
 		 ~Triangulation()
@@ -47,9 +47,34 @@ class Triangulation{
  }
 
 // constructors
-Triangulation::Triangulation():{
+Triangulation::Triangulation(){
 
-	size_t
+}
 
+// destructor
+
+Triangulation::~Triangulation(){
+
+		delete [] xcoords;
+	delete [] ycoords;
+
+	for(int i = 0; i < nElts; i++){
+		delete [] elements[i];
+	}
+
+	delete [] elements;
+
+	for(int i = 0; i < nDirichlet; i++){
+		delete [] dirichlet[i];
+	}
+	
+	delete [] dirichlet;
+
+	for(int i = 0; i < nNeumann; i++){
+		delete [] neumann[i];
+	}
+	
+	delete [] neumann;
+	
 }
 
