@@ -1,21 +1,20 @@
 [Anjuta]
-Geometry=976x604+72+33
-
-[File Loader]
-Files=../../src/triangulation.h#1%%%../../src/triangulation.cpp#58
-
-[Document Manager]
-bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
+Geometry=976x626+72+33
 
 [Execution]
-Program arguments=
 Program uri=../../Debug/src/fem
 Run in terminal=2
 Working directories=../../.
 
+[File Loader]
+Files=../../src/triangulation.h#1%%%../../src/triangulation.cpp#58%%%../../src/main.cc#2
+
+[Document Manager]
+bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
+
 [Project Manager]
 Shortcut=FEM//src//fem
-Expand=FEM%%%FEM//src%%%FEM//src//fem
+Expand=FEM%%%FEM//src%%%FEM//src//fem%%%FEM//dist_doc
 
 [Build]
 Configuration list=1:Default:%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized%%%1:MinGW32:MinGW32
