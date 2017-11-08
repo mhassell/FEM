@@ -1,58 +1,39 @@
-/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
-/*
- * triangulation.cpp
- * Copyright (C) 2017  <>
- *
- * FEM is free software: you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * FEM is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along
- * with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
+#include <iostream>
 #include <Eigen/Dense>
+
 #include "triangulation.h"
 
-class Triangulation{
-
-	public:
-		 // attributes
-		 int nElts;
-		 int nDirichlet;
-		 int nNeumann;
-		 
-		 double *xcoords;
-		 double *ycoords;
-		 int **elements;   // nElts x 3
-		 int **dirichlet;  // nDirichlet x 2
-		 int **neumann;	   // nNeumann x 2
-
-		//methods
-		 RedRefinement();
-		 Enhance();
-
-		// constructors
-		 Triangulation();
-
-		// destructor
-		 ~Triangulation()
-			 
- }
-
 // constructors
-Triangulation::Triangulation(){
+Triangulation::Triangulation(int numElts, int numDirichlet, int numNeumann, int nPoints){
+
+	nElts = numElts;
+	nDirichlet = numDirichlet;
+	nNeumann = numNeumann;
+
+	double *xcoords = new double[nPoints];
+	double *ycoords = new double[nPoints];
+
+	// element array
+	int **elements = new int*[nElts];
+	for(int i = 0; i < nElts; i++){
+		elements[i] = new int[3];
+	}
+
+	// dirichlet edges
+	int **dirichlet = new int*[nDirichlet];
+	for(int i = 0; i < nDirichlet; i++){
+		dirichlet[i] = new int[2];
+	}
+
+	// neumann edges
+	int **neumann = new int*[nNeumann];
+	for(int i = 0; i < nNeumann; i++){
+		neumann[i] = new int[2];
+	}
 
 }
 
 // destructor
-
 Triangulation::~Triangulation(){
 
 	delete [] xcoords;
@@ -61,15 +42,13 @@ Triangulation::~Triangulation(){
 	for(int i = 0; i < nElts; i++){
 		delete [] elements[i];
 	}
-
+	
 	delete [] elements;
 
 	for(int i = 0; i < nDirichlet; i++){
 		delete [] dirichlet[i];
 	}
 	
-	delete [] dirichlet;
-
 	for(int i = 0; i < nNeumann; i++){
 		delete [] neumann[i];
 	}
@@ -77,4 +56,3 @@ Triangulation::~Triangulation(){
 	delete [] neumann;
 	
 }
-
