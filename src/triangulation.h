@@ -1,6 +1,8 @@
 #ifndef _TRIANGULATION_H_
 #define _TRIANGULATION_H_
 
+#include <vector>
+
 class Triangulation{
 
 	public:
@@ -9,8 +11,8 @@ class Triangulation{
 		 int nDirichlet;
 		 int nNeumann;
 		 
-		 double *xcoords;
-		 double *ycoords;
+		 std::vector<double> xcoords;
+		 std::vector<double> ycoords;
 		 int **elements;   // nElts x 3
 		 int **dirichlet;  // nDirichlet x 2
 		 int **neumann;	   // nNeumann x 2
@@ -21,9 +23,6 @@ class Triangulation{
 
 		// constructors
 		 Triangulation(int,int,int,int);
-
-		// destructor
-		 ~Triangulation();
 			 
  };
 
