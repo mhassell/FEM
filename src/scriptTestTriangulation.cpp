@@ -7,21 +7,19 @@ int main()
 
 	Triangulation T(5,4,3,2);
 
+	// test nElts
 	std::cout << T.nElts << std::endl;
 
-	for(int i = 0; i < 5; i++){
-		T.xcoords.push_back((double)i);
+	// test xcoords
+	for(int i = 0; i < 2; i++){
+		T.xcoords[i] = (double) i;
+	}
+	for(int i = 0; i < 2; i++){
+		std::cout << T.xcoords[i] << std::endl;
 	}
 
-	for(int i = 0; i < 4; i++){
-
-		T.elements[i][0] = 0;
-		T.elements[i][1] = 1;
-		T.elements[i][2] = 2;
-
-	}
-
-	std::cout << "here" << std::endl;
-
+	// test 
+	
+	
 }
 
