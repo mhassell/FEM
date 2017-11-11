@@ -18,7 +18,8 @@ int main()
 		std::cout << T.xcoords[i] << std::endl;
 	}
 
-	// test 
+	// test enhancement
+	T.Enhance();
 	
 	
 }

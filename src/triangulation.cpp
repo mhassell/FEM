@@ -53,18 +53,42 @@ Triangulation::~Triangulation(){
 
 }
 
-// enhance the geometric data structure
-Triangulation::Enhance(){
+// enhance the Triangulation 
+void Triangulation::Enhance(){
 /*
 Output: Enhanced triangulation with:
 	int **edges;
 	int **edgebyele;
 	int *diredge;
 	int *neuedge;
+	int *intedge; // interior edges
 	double *area;
 	double **normal;
 	int **orientation;
 */
 
+	// a priori, we don't know how many edges there are, but there are at most
+	// 3*nElts edges, so start there and then copy the nonzero ones into the actual object 
+	int **tmpEdges;
+	tmpEdges = new int*[3*nElts];
+	
+	for(int i = 0; i < nElts; i++){
+		tmpEdges[i] = new int[2];
+		tmpEdges[i][0] = 0;
+		tmpEdges[i][1] = 0;
+	}
+
+	for(int i = 0; i < nElts; i++){
+	
+		
+
+	}
+
+	
+	// free the memory 
+	for(int i = 0; i < nElts; i++){
+		delete[] tmpEdges[i];
+	}
+	delete[] tmpEdges;
 
 }

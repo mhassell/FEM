@@ -21,6 +21,7 @@ class Triangulation{
 		int **edgebyele;
 		int *diredge;
 		int *neuedge;
+		int *intedge;
 		double *area;
 		double **normal;
 		int **orientation;	 			
