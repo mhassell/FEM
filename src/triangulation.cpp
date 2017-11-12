@@ -1,4 +1,5 @@
 #include "triangulation.h"
+#include "utils.hpp"
 #include <iostream>
 
 // constructors
@@ -50,8 +51,12 @@ Triangulation::~Triangulation(){
 	for(int i = 0; i < nDirichlet; i++){
 		delete[] dirichlet[i];
 	}
-
 	delete[] dirichlet;
+
+	for(int i = 0; i < nEdges; i++){
+		delete[] edges[i];
+	}
+	delete[] edges;
 
 }
 
@@ -60,6 +65,9 @@ void Triangulation::Enhance(){
 /*
 Output: Enhanced triangulation with:
 	int **edges;
+	int **interiorEdges;
+	int nEdges;
+	int nInteriorEdges;
 	int **edgebyele;
 	int *diredge;
 	int *neuedge;
@@ -68,50 +76,102 @@ Output: Enhanced triangulation with:
 	double **normal;
 	int **orientation;
 */
- 
-	int **interiorEdges;
-	interiorEdges = new int*[nPoints];
+
+	makeEdges(); 
+
+}
+
+// clean up the constructor with some private methods
+void Triangulation::makeEdges(){
+
+	int **tmpEdges;
+	tmpEdges = new int*[nPoints];
 	
 	for(int i = 0; i < nPoints; i++){
-		interiorEdges[i] = new int[nPoints];
+		tmpEdges[i] = new int[nPoints];
 	}
 
 	for(int i = 0; i < nPoints; i++){
 		for(int j = 0; j < nPoints; j++){
-			interiorEdges[i][j] = 0;
+			tmpEdges[i][j] = 0;
 		}
 	}
 
 	for(int i = 0; i < nElts; i++){
-		interiorEdges[elements[i][0]][elements[i][1]] = 1;  // first to second
-		interiorEdges[elements[i][1]][elements[i][2]] = 1;  // second to third
-		interiorEdges[elements[i][2]][elements[i][0]] = 1;  // third to first
+		tmpEdges[elements[i][0]][elements[i][1]] = 1;  // first to second
+		tmpEdges[elements[i][1]][elements[i][2]] = 1;  // second to third
+		tmpEdges[elements[i][2]][elements[i][0]] = 1;  // third to first
 	}
 
 	if(nDirichlet>0){
 		for(int i = 0; i < nDirichlet; i++){
-			interiorEdges[dirichlet[i][0]][dirichlet[i][1]] = 0;	
+			tmpEdges[dirichlet[i][0]][dirichlet[i][1]] = 0;	
 		}
 	}
 
 	if(nNeumann>0){
 		for(int i = 0; i < nNeumann; i++){
-			interiorEdges[neumann[i][0]][neumann[i][1]] = 0;
+			tmpEdges[neumann[i][0]][neumann[i][1]] = 0;
 		}
 	}
 
 	for(int i = 0; i < nPoints; i++){
-		for(int j = 0; j < nPoints; j++){
-			std::cout << interiorEdges[i][j] << " ";
+		for(int j = 0; j < i; j++){
+			tmpEdges[i][j] = 0;  // delete duplicates in the lower half
 		}
-		std::cout << std::endl;
+	}
+
+	nInteriorEdges = 0;
+	for(int i = 0; i < nPoints; i++){
+		for(int j = 0; j < nPoints; j++){
+			if(tmpEdges[i][j] > 0)
+				nInteriorEdges++;
+		}	
+	}
+
+	nEdges = nInteriorEdges + nNeumann + nDirichlet;
+
+	edges = new int*[nEdges];
+ 	for(int i = 0; i < nEdges; i++){
+		edges[i] = new int[2];
+	}
+
+	for(int i = 0; i < nEdges; i++){
+		for(int j = 0; j < 2; j++){
+			edges[i][j] = 0;
+		}
 	}
 	
-	// free the memory 
-	for(int i = 0; i < nElts; i++){
-		delete[] interiorEdges[i];
+	// fill in the edge array
+	int edgecount = 0;
+	for(int i = 0; i < nPoints; i++){
+		for(int j = i; j < nPoints; j++){
+			if(tmpEdges[i][j]){
+				edges[edgecount][0] = i;
+				edges[edgecount][1] = j;
+				edgecount++;
+			}
+		}
 	}
 
-	delete[] interiorEdges;
+	for(int i = 0; i < nDirichlet; i++){
+		edges[edgecount][0] = dirichlet[i][0];
+		edges[edgecount][1] = dirichlet[i][1];
+		edgecount++;
+	}
+
+	for(int i = 0; i  < nNeumann; i++){
+		edges[edgecount][0] = neumann[i][0];
+		edges[edgecount][1] = neumann[i][1];
+		edgecount++;
+	}
+
+	printMatrix(edges, nEdges, 2);
+	
+	for(int i = 0; i < nPoints; i++){
+		delete[] tmpEdges[i];
+	}
+	delete[] tmpEdges;
 
 }
+

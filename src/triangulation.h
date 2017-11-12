@@ -9,6 +9,8 @@ class Triangulation{
 		int nDirichlet;
 		int nNeumann;
 		int nPoints;
+		int nEdges;
+		int nInteriorEdges;
 		 
 		// basic fields
 		double* xcoords;
@@ -19,6 +21,7 @@ class Triangulation{
 
 		// enhanced fields
 		int **edges;
+		int **interiorEdges;
 		int **edgebyele;
 		int *diredge;
 		int *neuedge;
@@ -36,6 +39,9 @@ class Triangulation{
 			 
 		// destructor
 		~Triangulation();
+
+	private:
+		void makeEdges();
 
  };
 
