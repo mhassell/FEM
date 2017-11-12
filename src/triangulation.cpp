@@ -1,4 +1,5 @@
 #include "triangulation.h"
+#include <iostream>
 
 // constructors
 Triangulation::Triangulation(int nElts, int nDirichlet, int nNeumann, int nPoints){
@@ -6,6 +7,7 @@ Triangulation::Triangulation(int nElts, int nDirichlet, int nNeumann, int nPoint
 	this->nElts = nElts;
 	this->nDirichlet = nDirichlet;
 	this->nNeumann = nNeumann;
+	this->nPoints = nPoints;
 
 	xcoords = new double[nPoints];
 	ycoords = new double[nPoints];
@@ -66,29 +68,50 @@ Output: Enhanced triangulation with:
 	double **normal;
 	int **orientation;
 */
-
-	// a priori, we don't know how many edges there are, but there are at most
-	// 3*nElts edges, so start there and then copy the nonzero ones into the actual object 
-	int **tmpEdges;
-	tmpEdges = new int*[3*nElts];
+ 
+	int **interiorEdges;
+	interiorEdges = new int*[nPoints];
 	
-	for(int i = 0; i < nElts; i++){
-		tmpEdges[i] = new int[2];
-		tmpEdges[i][0] = 0;
-		tmpEdges[i][1] = 0;
+	for(int i = 0; i < nPoints; i++){
+		interiorEdges[i] = new int[nPoints];
+	}
+
+	for(int i = 0; i < nPoints; i++){
+		for(int j = 0; j < nPoints; j++){
+			interiorEdges[i][j] = 0;
+		}
 	}
 
 	for(int i = 0; i < nElts; i++){
-	
-		
-
+		interiorEdges[elements[i][0]][elements[i][1]] = 1;  // first to second
+		interiorEdges[elements[i][1]][elements[i][2]] = 1;  // second to third
+		interiorEdges[elements[i][2]][elements[i][0]] = 1;  // third to first
 	}
 
+	if(nDirichlet>0){
+		for(int i = 0; i < nDirichlet; i++){
+			interiorEdges[dirichlet[i][0]][dirichlet[i][1]] = 0;	
+		}
+	}
+
+	if(nNeumann>0){
+		for(int i = 0; i < nNeumann; i++){
+			interiorEdges[neumann[i][0]][neumann[i][1]] = 0;
+		}
+	}
+
+	for(int i = 0; i < nPoints; i++){
+		for(int j = 0; j < nPoints; j++){
+			std::cout << interiorEdges[i][j] << " ";
+		}
+		std::cout << std::endl;
+	}
 	
 	// free the memory 
 	for(int i = 0; i < nElts; i++){
-		delete[] tmpEdges[i];
+		delete[] interiorEdges[i];
 	}
-	delete[] tmpEdges;
+
+	delete[] interiorEdges;
 
 }

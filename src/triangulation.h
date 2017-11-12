@@ -8,6 +8,7 @@ class Triangulation{
 		int nElts;
 		int nDirichlet;
 		int nNeumann;
+		int nPoints;
 		 
 		// basic fields
 		double* xcoords;

@@ -1,25 +1,44 @@
 #include "triangulation.h"
+#include "utils.hpp"
 
 #include <iostream>
 
 int main()
 {
 
-	Triangulation T(5,4,3,2);
+	Triangulation T(2,2,2,4);
 
-	// test nElts
-	std::cout << T.nElts << std::endl;
+	T.xcoords[0] = 0.0;
+	T.xcoords[1] = 1.0;
+	T.xcoords[2] = 0.8;
+	T.xcoords[3] = 0.2;
 
-	// test xcoords
-	for(int i = 0; i < 2; i++){
-		T.xcoords[i] = (double) i;
-	}
-	for(int i = 0; i < 2; i++){
-		std::cout << T.xcoords[i] << std::endl;
-	}
+	T.ycoords[0] = 0.0;
+	T.ycoords[1] = 0.0;
+	T.ycoords[2] = 0.7;
+	T.ycoords[3] = 1.0;
+
+	T.elements[0][0] = 0;
+	T.elements[0][1] = 1;
+	T.elements[0][2] = 3;
+
+	T.elements[1][0] = 1;
+	T.elements[1][1] = 2;
+	T.elements[1][2] = 3;
+
+	T.dirichlet[0][0] = 0;
+	T.dirichlet[0][1] = 1;
+	T.dirichlet[1][0] = 1;
+	T.dirichlet[1][1] = 2;
+
+	T.neumann[0][0] = 2;
+	T.neumann[0][1] = 3;
+	T.neumann[1][0] = 3;
+	T.neumann[1][1] = 0;
 
 	// test enhancement
 	T.Enhance();
+	
 	
 	
 }
