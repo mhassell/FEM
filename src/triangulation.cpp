@@ -58,6 +58,11 @@ Triangulation::~Triangulation(){
 	}
 	delete[] edges;
 
+	for(int i = 0; i < nElts; i++){
+		delete[] edgebyele[i];
+	}
+	delete[] edgebyele;
+
 }
 
 // enhance the Triangulation 
@@ -78,6 +83,7 @@ Output: Enhanced triangulation with:
 */
 
 	makeEdges(); 
+	getEdgeByElement();
 
 }
 
@@ -165,13 +171,67 @@ void Triangulation::makeEdges(){
 		edges[edgecount][1] = neumann[i][1];
 		edgecount++;
 	}
-
-	printMatrix(edges, nEdges, 2);
 	
 	for(int i = 0; i < nPoints; i++){
 		delete[] tmpEdges[i];
 	}
 	delete[] tmpEdges;
+
+}
+
+void Triangulation::getEdgeByElement(){
+
+	int **conn;
+	conn = new int*[nEdges];
+	for(int i = 0; i < nEdges; i++){
+		conn[i] = new int[nEdges];
+	}
+
+	for(int i = 0; i < nEdges; i++){
+		for(int j = 0; j < nEdges; j++){
+			conn[i][j] = 0;
+		}
+	}
+
+	for(int i = 0; i < nEdges; i++){
+		conn[edges[i][0]][edges[i][1]] = i+1; // dammit!
+	}
+		
+	// can't transpose in place - have aliasing
+	int **connt;
+	connt = new int*[nEdges];
+	for(int i = 0; i < nEdges; i++){
+		connt[i] = new int[nEdges];
+	}
+
+	zeroMatrix(connt, nEdges, nEdges);
+	
+	for(int i = 0; i < nEdges; i++){
+		for(int j = 0; j < nEdges; j++){
+			connt[i][j] = conn[j][i];			
+		}
+	}
+	
+	for(int i = 0; i < nEdges; i++){
+		for(int j = 0; j < nEdges; j++){
+			conn[i][j] += connt[i][j];
+		}
+	}
+
+	edgebyele = new int*[nElts];
+	for(int i = 0; i < nElts; i++){
+		edgebyele[i] = new int[nElts];
+	}
+
+	for(int i = 0; i < nEdges; i++){
+		delete[] connt[i];
+	}
+	delete[] connt;
+
+	for(int i = 0; i < nEdges; i++){
+		delete[] conn[i];
+	}
+	delete[] conn;
 
 }
 

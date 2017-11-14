@@ -42,6 +42,7 @@ class Triangulation{
 
 	private:
 		void makeEdges();
+		void getEdgeByElement();
 
  };
 
