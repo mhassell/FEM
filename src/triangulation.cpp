@@ -97,12 +97,8 @@ void Triangulation::makeEdges(){
 		tmpEdges[i] = new int[nPoints];
 	}
 
-	for(int i = 0; i < nPoints; i++){
-		for(int j = 0; j < nPoints; j++){
-			tmpEdges[i][j] = 0;
-		}
-	}
-
+	zeroMatrix(tmpEdges, nPoints, nPoints);
+	
 	for(int i = 0; i < nElts; i++){
 		tmpEdges[elements[i][0]][elements[i][1]] = 1;  // first to second
 		tmpEdges[elements[i][1]][elements[i][2]] = 1;  // second to third
@@ -142,11 +138,7 @@ void Triangulation::makeEdges(){
 		edges[i] = new int[2];
 	}
 
-	for(int i = 0; i < nEdges; i++){
-		for(int j = 0; j < 2; j++){
-			edges[i][j] = 0;
-		}
-	}
+	zeroMatrix(edges, nEdges,2);
 	
 	// fill in the edge array
 	int edgecount = 0;
@@ -187,11 +179,7 @@ void Triangulation::getEdgeByElement(){
 		conn[i] = new int[nEdges];
 	}
 
-	for(int i = 0; i < nEdges; i++){
-		for(int j = 0; j < nEdges; j++){
-			conn[i][j] = 0;
-		}
-	}
+	zeroMatrix(conn, nEdges, nEdges);
 
 	for(int i = 0; i < nEdges; i++){
 		conn[edges[i][0]][edges[i][1]] = i+1; // dammit!
