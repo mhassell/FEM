@@ -63,6 +63,9 @@ Triangulation::~Triangulation(){
 	}
 	delete[] edgebyele;
 
+	delete[] diredge;
+	delete[] neuedge;
+
 }
 
 // enhance the Triangulation 
@@ -82,8 +85,22 @@ Output: Enhanced triangulation with:
 	int **orientation;
 */
 
+	// some methods to clean up the constructor
 	makeEdges(); 
 	getEdgeByElement();
+
+	// now get lists of dir and neu edges
+	diredge = new int[nDirichlet];
+	for(int i = 0; i < nDirichlet; i++){
+		diredge[i] = nInteriorEdges + i;
+	}
+	
+	neuedge = new int[nNeumann];
+	for(int i = 0; i < nNeumann; i++){
+		neuedge[i] = nInteriorEdges + nDirichlet + i;
+	}
+
+	getAreas();
 
 }
 
@@ -182,7 +199,7 @@ void Triangulation::getEdgeByElement(){
 	zeroMatrix(conn, nEdges, nEdges);
 
 	for(int i = 0; i < nEdges; i++){
-		conn[edges[i][0]][edges[i][1]] = i+1; // dammit!
+		conn[edges[i][0]][edges[i][1]] = i;
 	}
 		
 	// can't transpose in place - have aliasing
@@ -208,8 +225,23 @@ void Triangulation::getEdgeByElement(){
 
 	edgebyele = new int*[nElts];
 	for(int i = 0; i < nElts; i++){
-		edgebyele[i] = new int[nElts];
+		edgebyele[i] = new int[3];
 	}
+
+	zeroMatrix(edgebyele, nElts, 3);
+	
+	int *n = new int[3];
+	
+	for(int i = 0; i < nElts; i++){
+		for(int j = 0; j < 3; j++){
+			n[j] = elements[i][j];
+		}
+		edgebyele[i][0] = conn[n[0]][n[1]];
+		edgebyele[i][1] = conn[n[1]][n[2]];
+		edgebyele[i][2] = conn[n[2]][n[0]];
+	}
+
+	delete[] n;
 
 	for(int i = 0; i < nEdges; i++){
 		delete[] connt[i];
@@ -223,3 +255,8 @@ void Triangulation::getEdgeByElement(){
 
 }
 
+void Triangulation::getAreas(){
+
+	
+
+}
