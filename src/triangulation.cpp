@@ -66,6 +66,8 @@ Triangulation::~Triangulation(){
 	delete[] diredge;
 	delete[] neuedge;
 
+	delete[] area;
+
 }
 
 // enhance the Triangulation 
@@ -101,6 +103,13 @@ Output: Enhanced triangulation with:
 	}
 
 	getAreas();
+
+	int *firstnode = new int[nPoints];
+	for(int i = 0; i < nPoints; i++){
+		
+	}
+
+	delete[] firstnode;
 
 }
 
@@ -257,6 +266,14 @@ void Triangulation::getEdgeByElement(){
 
 void Triangulation::getAreas(){
 
-	
+	area = new double[nElts];
+
+	for(int i = 0; i < nElts; i++){
+		area[i] = (xcoords[elements[i][1]]-xcoords[elements[i][0]])
+				 *(ycoords[elements[i][2]]-ycoords[elements[i][0]])
+				 -(ycoords[elements[i][1]]-ycoords[elements[i][0]])
+				 *(xcoords[elements[i][2]]-xcoords[elements[i][0]]);
+		area[i] *= 0.5;
+	}
 
 }
