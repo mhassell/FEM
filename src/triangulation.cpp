@@ -68,6 +68,11 @@ Triangulation::~Triangulation(){
 
 	delete[] area;
 
+	for(int i = 0; i < nElts; i++){
+		delete[] orientation[i];
+	}
+	delete[] orientation;
+
 }
 
 // enhance the Triangulation 
@@ -104,12 +109,15 @@ Output: Enhanced triangulation with:
 
 	getAreas();
 
-	int *firstnode = new int[nPoints];
-	for(int i = 0; i < nPoints; i++){
-		
-	}
+	// get orientations
+	orientation = new int*[nElts];
+	for(int i = 0; i < nElts; i++){
+		orientation[i] = new int[3];
+	}	
 
-	delete[] firstnode;
+	zeroMatrix(orientation, nElts, 3);	
+
+	
 
 }
 
