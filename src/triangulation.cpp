@@ -117,7 +117,43 @@ Output: Enhanced triangulation with:
 
 	zeroMatrix(orientation, nElts, 3);	
 
+	int **firstnode = new int*[nElts];
+	for(int i = 0; i < nElts; i++){
+		firstnode[i] = new int[3];
+	}
+
+	// restack edgebyele (this is wasteful)
 	
+	int *tmp = new int[nElts*3];
+	for(int i = 0; i < 3; i++){
+		for(int j = 0; j < nElts; j++){
+			std::cout << j + 3*i << std::endl;
+			tmp[j + 3*i] = edgebyele[j][i];
+		}
+	}
+
+	/*
+	for(int i = 0; i < 4; i++){
+		std::cout << tmp[i] << std::endl;
+	}
+	*/
+
+	/* 
+	for(int i = 0; i < nElts; i++){
+		for(int j = 0; j < 3; j++){
+			// firstnode[i][j] = edges[tmp[]][0];
+		}
+	}
+	
+	delete[] tmp;
+	*/
+
+	/*
+	for(int i = 0; i < nElts; i++){
+		delete[] firstnode[i];
+	}
+	delete[] firstnode;
+	*/
 
 }
 
