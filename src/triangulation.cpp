@@ -31,6 +31,8 @@ Triangulation::Triangulation(int nElts, int nDirichlet, int nNeumann, int nPoint
 		neumann[i] = new int[2];
 	}
 
+	enhanced = false;
+
 }
 
 Triangulation::~Triangulation(){
@@ -90,9 +92,15 @@ Output: Enhanced triangulation with:
 	double *area;
 	double **normal;
 	int **orientation;
+	bool enhanced;
 */
 
-	// some methods to clean up the constructor
+	// don't double enhance - will break things
+	if(enhanced){
+		// break or except?
+	}
+
+	// some methods to clean up the enhance functionality
 	makeEdges(); 
 	getEdgeByElement();
 
@@ -153,6 +161,8 @@ Output: Enhanced triangulation with:
 		delete[] firstnode[i];
 	}
 	delete[] firstnode;
+
+	enhanced = true;
 
 }
 
@@ -319,4 +329,61 @@ void Triangulation::getAreas(){
 		area[i] *= 0.5;
 	}
 
+}
+
+// need to be wary of aliasing and memleaks when overwriting object fields!
+void Triangulation::RedRefinement(){
+
+	// check if the triangulation has been enhanced (if so, delete some of the enhanced fields)
+	if(enhanced){
+
+		delete[] area;
+
+		for(int i = 0; i < nElts; i++){
+			delete[] orientation[i];
+		}
+		delete[] orientation;
+
+		enhanced = false;
+
+	}
+	else{
+
+		makeEdges();
+		getEdgeByElement();
+
+	}
+
+	// renumber edges and make new mesh	
+	for(int i = 0; i < nElts; i++){
+		for(int j = 0; j < 3; j++){
+			edgebyele[i][j] += nPoints;
+		}
+	} 
+
+	// store these before overwriting
+	double *oldXCoords = new double[nPoints];
+	double *oldYCoords = new double[nPoints];
+
+	for(int i = 0; i < nPoints; i++){
+		oldXCoords[i] = xcoords[i];
+		oldYCoords[i] = ycoords[i];
+	}
+
+	delete[] xcoords;
+	delete[] ycoords;
+
+	xcoords = new double[4*nElts];
+	ycoords = new double[4*nElts];
+
+	delete[] oldXCoords;
+	delete[] oldYCoords;
+
+	// delete old edgebyele
+	for(int i = 0; i < nElts; i++){
+		delete[] edgebyele[i];
+	}
+
+	delete[] edgebyele;
+	
 }
