@@ -7,7 +7,7 @@ int main(){
 
 	int* value;
 
-	assert(value == NULL); // good, this checks that the pointer was defined but is not allocated
+	assert(value == NULL); // this checks that the pointer was defined but is not allocated
 	
 	value = new int;
 	*value = 7;	
@@ -18,6 +18,12 @@ int main(){
 
 	delete value;
 
-	assert(value==NULL);    // check that it is null again
+	// assert(value==NULL);    // check that it is null again (not the case, fails at runtime)
+
+	value = new int;
+
+	*value = 7;
+
+	delete[] value;  // valgrind gives some interesting warnings
 
 }
