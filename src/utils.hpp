@@ -18,6 +18,17 @@ void printMatrix(T &a, int m, int n){
 	std::cout << std::endl;
 }
 
+// print a 1d array
+template <typename T>
+void printArray(T &a, int m){
+
+	for(int i = 0; i < m; i++){
+		std::cout << a[i] << std::endl;
+	}
+	std::cout << std::endl;
+
+}
+
 // zero a matrix (without uniform initializers)
 template <typename T>
 void zeroMatrix(T &a, int m, int n){

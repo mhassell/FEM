@@ -373,8 +373,23 @@ void Triangulation::RedRefinement(){
 	delete[] xcoords;
 	delete[] ycoords;
 
-	xcoords = new double[4*nElts];
-	ycoords = new double[4*nElts];
+	// every old point is still part of the mesh, and every edge gets bisected
+	xcoords = new double[nPoints + nEdges];
+	ycoords = new double[nPoints + nEdges];
+
+	// fill in old points first
+	for(int i = 0; i < nPoints; i++){
+		xcoords[i] = oldXCoords[i];
+		ycoords[i] = oldYCoords[i];
+	}
+
+	// now put the new points in
+	for(int i = 0; i < nEdges; i++){
+		xcoords[nPoints+i] = 0.5*xcoords[edges[i][0]] + 0.5*xcoords[edges[i][1]];
+		ycoords[nPoints+i] = 0.5*ycoords[edges[i][0]] + 0.5*ycoords[edges[i][1]];
+	}
+
+	nPoints += nEdges;
 
 	delete[] oldXCoords;
 	delete[] oldYCoords;

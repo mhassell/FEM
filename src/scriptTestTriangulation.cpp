@@ -39,7 +39,8 @@ int main()
 	// test enhancement
 	T.Enhance();
 
-	
+	// test refinement
+	T.RedRefinement();
 
 }
 
