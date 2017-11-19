@@ -357,7 +357,7 @@ void Triangulation::RedRefinement(){
 	// renumber edges and make new mesh	
 	for(int i = 0; i < nElts; i++){
 		for(int j = 0; j < 3; j++){
-			edgebyele[i][j] += nPoints;
+			edgebyele[i][j] += nPoints; // this should be deleted when we're done
 		}
 	} 
 
@@ -390,6 +390,39 @@ void Triangulation::RedRefinement(){
 	}
 
 	nPoints += nEdges;
+
+	// do the local thing in two steps
+	int ** tmp;
+	tmp = new int*[nElts];
+	for(int i = 0; i < nElts; i++){
+		tmp[i] = new int[6];
+	}
+
+	for(int i = 0; i < nElts; i++){
+		tmp[i][0] = elements[i][0];
+		tmp[i][1] = elements[i][1];
+		tmp[i][2] = elements[i][2];
+		tmp[i][3] = edgebyele[i][0];
+		tmp[i][4] = edgebyele[i][1];
+		tmp[i][5] = edgebyele[i][2];
+	}
+	
+	// note that this is already transposed
+	int **tmp2;
+	tmp2 = new int*[12];
+	for(int i = 0; i < nElts; i++){
+		tmp2[i] = new int[nElts];
+	}		
+
+	for(int i = 0; i < 12; i++){
+		delete[] tmp2[i];
+	}	
+	delete[] tmp2;
+
+	for(int i = 0; i < nElts; i++){
+		delete[] tmp[i];
+	}
+	delete[] tmp;	
 
 	delete[] oldXCoords;
 	delete[] oldYCoords;
