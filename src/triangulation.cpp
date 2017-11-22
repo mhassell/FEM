@@ -1,6 +1,5 @@
 #include "triangulation.h"
 #include "utils.hpp"
-#include <iostream>
 
 // constructors
 Triangulation::Triangulation(int nElts, int nDirichlet, int nNeumann, int nPoints){
@@ -407,17 +406,28 @@ void Triangulation::RedRefinement(){
 		tmp[i][5] = edgebyele[i][2];
 	}
 	
-	// note that this is already transposed
-	int **tmp2;
-	tmp2 = new int*[12];
+	// note that this is already transposed (it is the local array after permuting)
+	int **local;
+	local = new int*[12];
 	for(int i = 0; i < nElts; i++){
-		tmp2[i] = new int[nElts];
-	}		
+		local[i] = new int[nElts];
+	}
+
+	zeroMatrix(local, 12, nElts);
+
+	int newElts[12] = {0, 3, 5, 1, 4, 3, 2, 5, 4, 3, 4, 5};
+
+	for(int i = 0; i < nElts; i++){
+		for(int j = 0; j < 12; j++){
+			std::cout << tmp[i][newElts[j]] << std::endl;
+			// local[j][i] = tmp[i][newElts[j]];
+		}
+	}
 
 	for(int i = 0; i < 12; i++){
-		delete[] tmp2[i];
+		delete[] local[i];
 	}	
-	delete[] tmp2;
+	delete[] local;
 
 	for(int i = 0; i < nElts; i++){
 		delete[] tmp[i];
