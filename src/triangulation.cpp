@@ -409,7 +409,7 @@ void Triangulation::RedRefinement(){
 	// note that this is already transposed (it is the local array after permuting)
 	int **local;
 	local = new int*[12];
-	for(int i = 0; i < nElts; i++){
+	for(int i = 0; i < 12; i++){
 		local[i] = new int[nElts];
 	}
 
@@ -419,10 +419,11 @@ void Triangulation::RedRefinement(){
 
 	for(int i = 0; i < nElts; i++){
 		for(int j = 0; j < 12; j++){
-			std::cout << tmp[i][newElts[j]] << std::endl;
-			// local[j][i] = tmp[i][newElts[j]];
+			local[j][i] = tmp[i][newElts[j]];
 		}
 	}
+
+	printMatrix(local, 12, nElts);
 
 	for(int i = 0; i < 12; i++){
 		delete[] local[i];
