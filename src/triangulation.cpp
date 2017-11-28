@@ -425,6 +425,8 @@ void Triangulation::RedRefinement(){
 
 	printMatrix(local, 12, nElts);
 
+	
+
 	for(int i = 0; i < 12; i++){
 		delete[] local[i];
 	}	

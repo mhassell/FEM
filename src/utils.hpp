@@ -2,6 +2,7 @@
 #define UTILS_HPP
 
 #include <iostream>
+#include <cassert>
 
 // a utility header to simplify some code
 
@@ -39,6 +40,28 @@ void zeroMatrix(T &a, int m, int n){
 		}
 	}
 	
+}
+
+// reshape a matrix, return a pointer to it (do not delete the old one)
+template <typename T>
+T* reshapeMatrix(T &a, int mold, int nold, int mnew, int nnew){
+
+	assert(mold*nold == mnew*nnew);
+
+	for(int i = 0; i < mold; i++){
+		for(int j = 0; j < nold; j++){
+			
+		}
+	}
+
+}
+
+// transpose a matrix, return a pointer to it (do not delete the old one)
+template <typename T>
+T* transposeMatrix(T &a, int m, int n){
+	
+	
+
 }
 
 #endif
