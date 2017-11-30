@@ -42,9 +42,30 @@ void zeroMatrix(T &a, int m, int n){
 	
 }
 
+// transpose a matrix, return a pointer to it (do not delete the old one)
+template <typename T>
+T** transposeMatrix(T** &a, int m, int n){
+	
+	assert(m!=1 && n!=1);	
+
+	T** newMatrix = new T* [n];
+	for(int i = 0; i < n; i++){
+		newMatrix[i] = new T [n];
+	}
+
+	for(int i = 0; i < m; i++){
+		for(int j = 0; j < n; j++){
+			newMatrix[j][i] = a[i][j];
+		}
+	}
+
+	return newMatrix;
+
+}
+
 // reshape a matrix, return a pointer to it (do not delete the old one)
 template <typename T>
-T** reshapeMatrix(T &a, int mold, int nold, int mnew, int nnew){
+T** reshapeMatrix(T** &a, int mold, int nold, int mnew, int nnew){
 
 	assert(mold*nold == mnew*nnew);
 
@@ -61,21 +82,13 @@ T** reshapeMatrix(T &a, int mold, int nold, int mnew, int nnew){
 		}
 	}
 
-	for(int i = 0; i < mnew; i++){
-		for(int j = 0; j < nnew; j++){
-			newMatrix[i][j] = tmp[i*nnew+j];
+	for(int i = 0; i < nnew; i++){
+		for(int j = 0; j < mnew; j++){
+			newMatrix[j][i] = tmp[j*mnew+i];
 		}
 	}
 
 	return newMatrix;
-
-}
-
-// transpose a matrix, return a pointer to it (do not delete the old one)
-template <typename T>
-T** transposeMatrix(T &a, int m, int n){
-	
-	
 
 }
 

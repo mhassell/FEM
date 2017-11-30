@@ -423,19 +423,35 @@ void Triangulation::RedRefinement(){
 		}
 	}
 
+	for(int i = 0; i < nElts; i++){
+		delete[] tmp[i];
+	}
+	delete[] tmp;
+
+	// clear the old elements
+	for(int i = 0; i < nElts; i++){
+		delete[] elements[i];
+	}
+	delete[] elements;
+
+	// and insert the new elements
+	int** tmp2;
+
 	printMatrix(local, 12, nElts);
 
+	tmp2 = reshapeMatrix(local, 12, nElts, 3, 4*nElts);
+
+	printMatrix(tmp2, 3, 4*nElts);
 	
+	for(int i = 0; i < 3; i++){
+		delete[] tmp2[i];
+	}
+	delete[] tmp2;	
 
 	for(int i = 0; i < 12; i++){
 		delete[] local[i];
 	}	
-	delete[] local;
-
-	for(int i = 0; i < nElts; i++){
-		delete[] tmp[i];
-	}
-	delete[] tmp;	
+	delete[] local;	
 
 	delete[] oldXCoords;
 	delete[] oldYCoords;

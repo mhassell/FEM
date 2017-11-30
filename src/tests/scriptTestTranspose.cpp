@@ -1,11 +1,11 @@
-// test the reshape utility
+// test the transpose utility
 
 #include "utils.hpp"
 
 int main(){
 
 	int rows = 4;
-	int cols = 8;
+	int cols = 7;
 
 	int **b;
 	b = new int *[rows];
@@ -25,21 +25,19 @@ int main(){
 
 	int** c;
 
-	c = reshapeMatrix(b,rows,cols,2,16);
+	c = transposeMatrix(b,rows,cols);
 
-	printMatrix(c, 2, 16);
+	printMatrix(c, cols, rows);
 
 	for(int i = 0; i < rows; i++){
 		delete[] b[i];
 	}
 	delete[] b;
 
-	for(int i = 0; i < 2; i++){
+	for(int i = 0; i < cols; i++){
 		delete[] c[i];
 	}
 	delete[] c;
-
-	// printMatrix(c, cols, rows);
 
 
 }
