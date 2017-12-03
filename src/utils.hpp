@@ -78,15 +78,12 @@ T** reshapeMatrix(T** &a, int mold, int nold, int mnew, int nnew){
 	// it would be nice to do away with this...
 	for(int i = 0; i < nold; i++){
 		for(int j = 0; j < mold; j++){
-			tmp[j*nold+i] = a[j][i];
+			tmp[i*mold+j] = a[j][i];
 		}
 	}
 
-	printArray(tmp, 
-
 	for(int i = 0; i < nnew; i++){
 		for(int j = 0; j < mnew; j++){
-			// std::cout << i*mnew + j << std::endl;
 			newMatrix[j][i] = tmp[i*mnew+j];
 		}
 	}

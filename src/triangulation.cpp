@@ -437,11 +437,11 @@ void Triangulation::RedRefinement(){
 	// and insert the new elements
 	int** tmp2;
 
-	printMatrix(local, 12, nElts);
-
 	tmp2 = reshapeMatrix(local, 12, nElts, 3, 4*nElts);
 
-	printMatrix(tmp2, 3, 4*nElts);
+	int ** tmp3;
+
+	
 	
 	for(int i = 0; i < 3; i++){
 		delete[] tmp2[i];
