@@ -45,6 +45,7 @@ class Triangulation{
 		void getEdgeByElement();
 		void getAreas();
 		bool enhanced;
+		void unEnhance();
 
  };
 

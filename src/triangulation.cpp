@@ -333,24 +333,9 @@ void Triangulation::getAreas(){
 // need to be wary of aliasing and memleaks when overwriting object fields!
 void Triangulation::RedRefinement(){
 
-	// check if the triangulation has been enhanced (if so, delete some of the enhanced fields)
-	if(enhanced){
-
-		delete[] area;
-
-		for(int i = 0; i < nElts; i++){
-			delete[] orientation[i];
-		}
-		delete[] orientation;
-
-		enhanced = false;
-
-	}
-	else{
-
-		makeEdges();
-		getEdgeByElement();
-
+	// check if the triangulation has been enhanced
+	if(!enhanced){
+		Enhance();
 	}
 
 	// renumber edges and make new mesh	
@@ -439,10 +424,9 @@ void Triangulation::RedRefinement(){
 
 	tmp2 = reshapeMatrix(local, 12, nElts, 3, 4*nElts);
 
-	int ** tmp3;
+	elements = transposeMatrix(tmp2, 3, 4*nElts);
 
-	
-	
+	// delete all the mess
 	for(int i = 0; i < 3; i++){
 		delete[] tmp2[i];
 	}
@@ -456,11 +440,50 @@ void Triangulation::RedRefinement(){
 	delete[] oldXCoords;
 	delete[] oldYCoords;
 
-	// delete old edgebyele
+	unEnhance();
+
+	nElts *= 4;
+
+	// and finally enhance
+	Enhance();
+	
+}
+
+// clean up fields related to redRefinement
+void Triangulation::unEnhance(){
+
+	// don't delete what aint there
+	assert(enhanced == true);
+
+	delete[] area;
+
+	for(int i = 0; i < nElts; i++){
+		delete[] orientation[i];
+	}
+	delete[] orientation;
+
+	for(int i = 0; i < nEdges; i++){
+		delete[] edges[i];
+	}
+	delete[] edges;
+
+	/*
+	for(int i = 0; i < nInteriorEdges; i++){
+		delete[] interiorEdges[i];
+	}
+	delete[] interiorEdges;
+	*/
+	nInteriorEdges = 0;
+	
 	for(int i = 0; i < nElts; i++){
 		delete[] edgebyele[i];
 	}
-
 	delete[] edgebyele;
-	
+
+	delete[] diredge;
+	delete[] neuedge;
+	// delete[] intedge;
+		
+	// don't forget to delete normals when that gets put in
+
 }
