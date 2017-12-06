@@ -3,6 +3,9 @@ scriptTestTriangulation: triangulation.h triangulation.cpp scriptTestTriangulati
 
 scriptTestUtils: utils.hpp scriptTestUtils.cpp
 	g++ -I /usr/local/include/eigen scriptTestUtils.cpp -o scriptTestUtils
+
+scriptTestMatrix: scriptTestMatrix.cpp matrix.hpp
+	g++ scriptTestMatrix.cpp -o scriptTestMatrix
 	
 
 
