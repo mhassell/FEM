@@ -18,7 +18,7 @@ class Matrix{
 		void print();
 		void zero();
 
-		T operator(int, int); // access operator
+		// T operator(int, int); // access operator
 
 		Matrix();
 		Matrix(int, int);
@@ -32,13 +32,21 @@ class Matrix{
 
 };
 
-template <class T> 
+template <typename T>
+Matrix<T>::Matrix(){
+	
+	rows = 0;
+	cols = 0;
+
+};
+
+template <typename T>
 Matrix<T>::Matrix(int m, int n){
 
 	rows = m;
 	cols = n;
 
-	T** elts = new T*[m];
+	elts = new T*[m];
 
 	for(int i = 0; i < m; i++){
 		elts[i] = new T[n];
@@ -46,30 +54,35 @@ Matrix<T>::Matrix(int m, int n){
 
 }
 
-template <class T> 
+template <typename T>
 Matrix<T>::~Matrix(){
 
-	assert(rows*cols != 0);
-	for(int i = 0; i < rows; i++){
-		delete[] elts[i];
+	if(rows!=0){
+		for(int i = 0; i < rows; i++){					
+			delete[] elts[i];
+		}
+		delete[] elts;
 	}
-	delete[] elts;
+
 
 }
 
-Matrix<T>::nrows(){
+template <typename T>
+int Matrix<T>::nrows(){
 
 	return rows;
 
 }
 
-Matrix<T>::ncols(){
+template <typename T>
+int Matrix<T>::ncols(){
 
 	return cols;
 
 }
 
-Matrix<T>::print(){
+template <typename T>
+void Matrix<T>::print(){
 
 	assert(rows*cols != 0); 	// works for null as well
 
