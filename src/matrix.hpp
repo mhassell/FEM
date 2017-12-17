@@ -18,7 +18,7 @@ class Matrix{
 		void print();
 		void zero();
 
-		// T operator(int, int); // access operator
+		T& operator()(int, int); // access operator
 
 		Matrix();
 		Matrix(int, int);
@@ -92,6 +92,14 @@ void Matrix<T>::print(){
 		}
 		std::cout << std::endl;
 	}
+
+}
+
+template <typename T>
+T& Matrix<T>::operator()(int i, int j){
+	// need to return a reference for this to work for assignment
+	assert(rows*cols != 0);
+	return elts[i][j];
 
 }
 
