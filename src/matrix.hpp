@@ -20,11 +20,15 @@ class Matrix{
 		void zero();
 
 		T& operator()(int, int); // access operator
-
+		T& 
+	
+		// specialized object methods (rule of 3, etc)
 		Matrix();
 		Matrix(int, int);
 		~Matrix();
-		
+		Matrix(const Matrix &M1);		
+
+
 	private:
 		int rows;
 		int cols;
@@ -176,7 +180,7 @@ void Matrix<T>::transposeInPlace(){
 	}
 
 	for(int i = 0; i < rows; i++){
-		delete elts[i];
+		delete[] elts[i];
 	}
 	delete[] elts;
 
@@ -197,5 +201,30 @@ void Matrix<T>::transposeInPlace(){
 
 }
 
+// copy constructor
+template <typename T>
+Matrix<T>::Matrix(const Matrix &M1){
+
+	rows = M1.rows;
+	cols = M1.cols;
+	elts = new T*[rows];
+	for(int i = 0; i < rows; i++){
+		elts[i] = new T[cols];
+	}
+
+	for(int i = 0; i < rows; i++){
+		for(int j = 0; j < cols; j++){
+			elts[i][j] = M1.elts[i][j];
+		}
+	}
+}
+
+// copy assignment operator
+template <typename T>
+Matrix<T>& Matrix<T>::operator=(const Matrix &M1){
+
+	
+
+}
 
 #endif
