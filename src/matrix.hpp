@@ -26,7 +26,7 @@ class Matrix{
 		Matrix(int, int);
 		~Matrix();
 		Matrix(const Matrix&);  // copy constructor
-		Matrix<T>& operator=(const Matrix&); // copy assignment 
+		Matrix<T>& operator=(const Matrix&); // copy assignment op
 
 	private:
 		int rows;

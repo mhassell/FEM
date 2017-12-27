@@ -66,6 +66,7 @@ Triangulation::~Triangulation(){
 
 	delete[] diredge;
 	delete[] neuedge;
+	delete[] intedge;
 
 	delete[] area;
 
@@ -80,24 +81,20 @@ Triangulation::~Triangulation(){
 void Triangulation::Enhance(){
 /*
 Output: Enhanced triangulation with:
-	int **edges;
-	int **interiorEdges;
-	int nEdges;
-	int nInteriorEdges;
-	int **edgebyele;
-	int *diredge;
-	int *neuedge;
-	int *intedge; // interior edges
-	double *area;
-	double **normal;
-	int **orientation;
-	bool enhanced;
+	int **edges;   			(done)
+	int nEdges;    			(done)
+	int nInteriorEdges;		(done)
+	int **edgebyele;		(done)
+	int *diredge;			(done)
+	int *neuedge;			(done)
+	int *intedge; 						// interior edges
+	double *area;			(done)
+	int **orientation;		(done)
+	bool enhanced;			(done)
 */
 
 	// don't double enhance - will break things
-	if(enhanced){
-		// break or except?
-	}
+	assert(enhanced==false);	
 
 	// some methods to clean up the enhance functionality
 	makeEdges(); 
@@ -216,7 +213,7 @@ void Triangulation::makeEdges(){
 		edges[i] = new int[2];
 	}
 
-	zeroMatrix(edges, nEdges,2);
+	zeroMatrix(edges, nEdges, 2);
 	
 	// fill in the edge array
 	int edgecount = 0;
@@ -241,6 +238,9 @@ void Triangulation::makeEdges(){
 		edges[edgecount][1] = neumann[i][1];
 		edgecount++;
 	}
+
+	// get references into the edge array for interior edges
+	intedge = new int[nInteriorEdges];
 	
 	for(int i = 0; i < nPoints; i++){
 		delete[] tmpEdges[i];
@@ -467,12 +467,6 @@ void Triangulation::unEnhance(){
 	}
 	delete[] edges;
 
-	/*
-	for(int i = 0; i < nInteriorEdges; i++){
-		delete[] interiorEdges[i];
-	}
-	delete[] interiorEdges;
-	*/
 	nInteriorEdges = 0;
 	
 	for(int i = 0; i < nElts; i++){
@@ -482,8 +476,6 @@ void Triangulation::unEnhance(){
 
 	delete[] diredge;
 	delete[] neuedge;
-	// delete[] intedge;
+	delete[] intedge;
 		
-	// don't forget to delete normals when that gets put in
-
 }

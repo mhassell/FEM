@@ -15,19 +15,17 @@ class Triangulation{
 		// basic fields
 		double* xcoords;
 		double* ycoords;
-		int **elements;   // nElts x 3
-		int **dirichlet;  // nDirichlet x 2
-		int **neumann;	   // nNeumann x 2
+		int **elements;   	// nElts x 3
+		int **dirichlet;  	// nDirichlet x 2
+		int **neumann;	   	// nNeumann x 2
 
 		// enhanced fields
 		int **edges;
-		int **interiorEdges;
 		int **edgebyele;
 		int *diredge;
 		int *neuedge;
 		int *intedge;
 		double *area;
-		double **normal;
 		int **orientation;	 			
 
 		//methods
