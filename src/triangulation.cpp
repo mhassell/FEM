@@ -241,6 +241,9 @@ void Triangulation::makeEdges(){
 
 	// get references into the edge array for interior edges
 	intedge = new int[nInteriorEdges];
+	for(int i = 0; i < nInteriorEdges; i++){
+		intedge[i] = i;
+	}
 	
 	for(int i = 0; i < nPoints; i++){
 		delete[] tmpEdges[i];
@@ -375,6 +378,10 @@ void Triangulation::RedRefinement(){
 
 	nPoints += nEdges;
 
+	// delete the old x and y points
+	delete[] oldXCoords;
+	delete[] oldYCoords;
+
 	// do the local thing in two steps
 	int ** tmp;
 	tmp = new int*[nElts];
@@ -421,9 +428,7 @@ void Triangulation::RedRefinement(){
 
 	// and insert the new elements
 	int** tmp2;
-
 	tmp2 = reshapeMatrix(local, 12, nElts, 3, 4*nElts);
-
 	elements = transposeMatrix(tmp2, 3, 4*nElts);
 
 	// delete all the mess
@@ -435,16 +440,36 @@ void Triangulation::RedRefinement(){
 	for(int i = 0; i < 12; i++){
 		delete[] local[i];
 	}	
-	delete[] local;	
+	delete[] local;
 
-	delete[] oldXCoords;
-	delete[] oldYCoords;
+	// now look at boundary edges
+	local = new int*[2*nDirichlet];
+	for(int i = 0; i < 2*nDirichlet; i++){
+		local[i] = new int[2];
+	}
 
-	unEnhance();
+	for(int i = 0; i < nDirichlet; i++){
+		local[i][0] = dirichlet[i][0];
+		local[i][1] = dirichlet[i][1];
+	}
 
-	nElts *= 4;
+	int num = 0;
+	for(int i = nDirichlet; i < 2*nDirichlet; i++){
+		local[i][0] = num;
+		local[i][1] = num+1;
+		num++;
+	}
+
+	printMatrix(local, 2*nDirichlet, 2);
+
+	for(int i = 0; i < 2*nDirichlet; i++){
+		delete[] local[i];
+	}	
+	delete[] local;
 
 	// and finally enhance
+	unEnhance();
+	nElts *= 4;
 	Enhance();
 	
 }
@@ -477,5 +502,7 @@ void Triangulation::unEnhance(){
 	delete[] diredge;
 	delete[] neuedge;
 	delete[] intedge;
+
+	enhanced = false;
 		
 }
