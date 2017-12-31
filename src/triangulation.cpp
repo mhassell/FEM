@@ -87,7 +87,7 @@ Output: Enhanced triangulation with:
 	int **edgebyele;		(done)
 	int *diredge;			(done)
 	int *neuedge;			(done)
-	int *intedge; 						// interior edges
+	int *intedge; 			(done)
 	double *area;			(done)
 	int **orientation;		(done)
 	bool enhanced;			(done)
@@ -98,6 +98,7 @@ Output: Enhanced triangulation with:
 
 	// some methods to clean up the enhance functionality
 	makeEdges(); 
+
 	getEdgeByElement();
 
 	// now get lists of dir and neu edges

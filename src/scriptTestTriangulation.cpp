@@ -57,5 +57,27 @@ int main()
 	std::cout << "neumann: " << std::endl;
 	printMatrix(T.neumann, T.nNeumann, 2);
 
+	std::cout << "edges: " << std::endl;
+	printMatrix(T.edges, T.nEdges, 2);
+
+	std::cout << "edgebyele: " << std::endl;
+	printMatrix(T.edgebyele, T.nElts,3);
+
+	std::cout << "diredge: " << std::endl;
+	printMatrix(T.diredge, T.nDirichlet);
+
+	std::cout << "neuedge: " << std::endl;
+	printMatrix(T.neuedge, T.nNeumann);
+
+	std::cout << "intedge: " << std::endl;
+	printMatrix(T.intedge, T.nInteriorEdges);
+
+	std::cout << "area: " << std::endl;
+	printMatrix(T.area, T.nElts);
+
+	std::cout << "orientation: " << std::endl;
+	printMatrix(T.orientation, T.nElts, 3);
+
+
 }
 
