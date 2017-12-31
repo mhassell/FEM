@@ -42,7 +42,20 @@ int main()
 	// test refinement
 	T.RedRefinement();
 
-	
+	std::cout << "xcoords: " << std::endl;
+	printMatrix(T.xcoords, T.nPoints);
+
+	std::cout << "ycoords: " << std::endl;
+	printMatrix(T.ycoords, T.nPoints);
+
+	std::cout << "elements: " << std::endl;
+	printMatrix(T.elements, T.nElts, 3);
+
+	std::cout << "dirichlet: " << std::endl;
+	printMatrix(T.dirichlet, T.nDirichlet, 2);
+
+	std::cout << "neumann: " << std::endl;
+	printMatrix(T.neumann, T.nNeumann, 2);
 
 }
 

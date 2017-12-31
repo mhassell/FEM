@@ -21,7 +21,7 @@ void printMatrix(T &a, int m, int n){
 
 // print a 1d array
 template <typename T>
-void printArray(T &a, int m){
+void printMatrix(T &a, int m){
 
 	for(int i = 0; i < m; i++){
 		std::cout << a[i] << std::endl;

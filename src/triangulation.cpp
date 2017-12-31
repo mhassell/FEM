@@ -376,8 +376,6 @@ void Triangulation::RedRefinement(){
 		ycoords[nPoints+i] = 0.5*ycoords[edges[i][0]] + 0.5*ycoords[edges[i][1]];
 	}
 
-	nPoints += nEdges;
-
 	// delete the old x and y points
 	delete[] oldXCoords;
 	delete[] oldYCoords;
@@ -442,34 +440,90 @@ void Triangulation::RedRefinement(){
 	}	
 	delete[] local;
 
-	// now look at boundary edges
-	local = new int*[2*nDirichlet];
-	for(int i = 0; i < 2*nDirichlet; i++){
-		local[i] = new int[2];
+	// now look at boundary edges (local is nDirichlet x 3)
+	local = new int*[nDirichlet];
+	for(int i = 0; i < nDirichlet; i++){
+		local[i] = new int[3];
 	}
 
 	for(int i = 0; i < nDirichlet; i++){
 		local[i][0] = dirichlet[i][0];
 		local[i][1] = dirichlet[i][1];
+		local[i][2] = nPoints + nInteriorEdges + i;
 	}
 
-	int num = 0;
-	for(int i = nDirichlet; i < 2*nDirichlet; i++){
-		local[i][0] = num;
-		local[i][1] = num+1;
-		num++;
+	for(int i = 0; i < nDirichlet; i++){
+		delete[] dirichlet[i];
 	}
+	delete[] dirichlet;
 
-	printMatrix(local, 2*nDirichlet, 2);
-
+	dirichlet = new int*[2*nDirichlet];
 	for(int i = 0; i < 2*nDirichlet; i++){
+		dirichlet[i] = new int[2];
+	}
+
+	// copy first block in
+	for(int i = 0; i < nDirichlet; i++){
+		dirichlet[i][0] = local[i][0];
+		dirichlet[i][1] = local[i][2];
+	}
+	
+	// copy second block in
+	for(int i = nDirichlet; i < 2*nDirichlet; i++){
+		dirichlet[i][0] = local[i-nDirichlet][2];
+		dirichlet[i][1] = local[i-nDirichlet][1];
+	}
+
+	for(int i = 0; i < nDirichlet; i++){
+		delete[] local[i];
+	}	
+	delete[] local;
+
+	// neumann edges
+	local = new int*[nNeumann];
+	for(int i = 0; i < nNeumann; i++){
+		local[i] = new int[3];
+	}
+
+	for(int i = 0; i < nNeumann; i++){
+		local[i][0] = neumann[i][0];
+		local[i][1] = neumann[i][1];
+		local[i][2] = nPoints + nInteriorEdges + nDirichlet + i;
+	}
+
+	for(int i = 0; i < nNeumann; i++){
+		delete[] neumann[i];
+	}
+	delete[] neumann;
+
+	neumann = new int*[2*nNeumann];
+	for(int i = 0; i < 2*nNeumann; i++){
+		neumann[i] = new int[2];
+	}
+
+	// copy first block in
+	for(int i = 0; i < nNeumann; i++){
+		neumann[i][0] = local[i][0];
+		neumann[i][1] = local[i][2];
+	}
+	
+	// copy second block in
+	for(int i = nNeumann; i < 2*nNeumann; i++){
+		neumann[i][0] = local[i-nNeumann][2];
+		neumann[i][1] = local[i-nNeumann][1];
+	}
+
+	for(int i = 0; i < nNeumann; i++){
 		delete[] local[i];
 	}	
 	delete[] local;
 
 	// and finally enhance
 	unEnhance();
+	nPoints += nEdges;  // this needs to be down here so that BC edges works
 	nElts *= 4;
+	nDirichlet *= 2;
+	nNeumann *= 2;
 	Enhance();
 	
 }
