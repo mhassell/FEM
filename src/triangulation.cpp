@@ -213,32 +213,39 @@ void Triangulation::makeEdges(){
  	for(int i = 0; i < nEdges; i++){
 		edges[i] = new int[2];
 	}
-
-	zeroMatrix(edges, nEdges, 2);
 	
 	// fill in the edge array
 	int edgecount = 0;
-	for(int i = 0; i < nPoints; i++){
-		for(int j = i; j < nPoints; j++){
-			if(tmpEdges[i][j]){
+	for(int i = 0; i < nPoints; i++)
+	{
+		for(int j = i; j < nPoints; j++)
+		{
+			if(tmpEdges[i][j] == 1)
+			{
 				edges[edgecount][0] = i;
 				edges[edgecount][1] = j;
-				edgecount++;
+				++edgecount;
 			}
 		}
 	}
 
+	// something goes wrong here ^^^
+
+	// printMatrix(edges, nEdges, 2);
+
 	for(int i = 0; i < nDirichlet; i++){
 		edges[edgecount][0] = dirichlet[i][0];
 		edges[edgecount][1] = dirichlet[i][1];
-		edgecount++;
+		++edgecount;
 	}
 
 	for(int i = 0; i  < nNeumann; i++){
 		edges[edgecount][0] = neumann[i][0];
 		edges[edgecount][1] = neumann[i][1];
-		edgecount++;
+		++edgecount;
 	}
+
+	// printMatrix(edges, nEdges, 2);
 
 	// get references into the edge array for interior edges
 	intedge = new int[nInteriorEdges];
@@ -296,7 +303,7 @@ void Triangulation::getEdgeByElement(){
 	zeroMatrix(edgebyele, nElts, 3);
 	
 	int *n = new int[3];
-	
+
 	for(int i = 0; i < nElts; i++){
 		for(int j = 0; j < 3; j++){
 			n[j] = elements[i][j];
@@ -316,6 +323,7 @@ void Triangulation::getEdgeByElement(){
 	for(int i = 0; i < nEdges; i++){
 		delete[] conn[i];
 	}
+
 	delete[] conn;
 
 }

@@ -77,6 +77,7 @@ int main()
 
 	std::cout << "orientation: " << std::endl;
 	printMatrix(T.orientation, T.nElts, 3);
+	
 
 
 }
