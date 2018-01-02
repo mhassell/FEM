@@ -213,12 +213,14 @@ void Triangulation::makeEdges(){
  	for(int i = 0; i < nEdges; i++){
 		edges[i] = new int[2];
 	}
-	
+
+	// printMatrix(tmpEdges, nPoints, nPoints);	
+
 	// fill in the edge array
 	int edgecount = 0;
 	for(int i = 0; i < nPoints; i++)
 	{
-		for(int j = i; j < nPoints; j++)
+		for(int j = 0; j < nPoints; j++)
 		{
 			if(tmpEdges[i][j] == 1)
 			{
@@ -231,7 +233,7 @@ void Triangulation::makeEdges(){
 
 	// something goes wrong here ^^^
 
-	// printMatrix(edges, nEdges, 2);
+	printMatrix(edges, nEdges, 2);
 
 	for(int i = 0; i < nDirichlet; i++){
 		edges[edgecount][0] = dirichlet[i][0];
