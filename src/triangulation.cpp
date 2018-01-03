@@ -141,6 +141,7 @@ Output: Enhanced triangulation with:
 		}
 	}
 
+	// orientation
 	for(int i = 0; i < nElts; i++){
 		for(int j = 0; j < 3; j++){
 			if(elements[i][j] == firstnode[i][j]){
@@ -214,26 +215,22 @@ void Triangulation::makeEdges(){
 		edges[i] = new int[2];
 	}
 
-	// printMatrix(tmpEdges, nPoints, nPoints);	
-
 	// fill in the edge array
 	int edgecount = 0;
 	for(int i = 0; i < nPoints; i++)
 	{
-		for(int j = 0; j < nPoints; j++)
+		for(int j = 0; j < i; j++)
 		{
-			if(tmpEdges[i][j] == 1)
+			if(tmpEdges[j][i] == 1)
 			{
-				edges[edgecount][0] = i;
-				edges[edgecount][1] = j;
+				edges[edgecount][0] = j;
+				edges[edgecount][1] = i;
 				++edgecount;
 			}
 		}
 	}
 
-	// something goes wrong here ^^^
-
-	printMatrix(edges, nEdges, 2);
+	// printMatrix(edges, nEdges, 2);
 
 	for(int i = 0; i < nDirichlet; i++){
 		edges[edgecount][0] = dirichlet[i][0];
