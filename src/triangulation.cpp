@@ -1,5 +1,6 @@
 #include "triangulation.h"
 #include "utils.hpp"
+#include "matrix.hpp"
 
 // constructors
 Triangulation::Triangulation(int nElts, int nDirichlet, int nNeumann, int nPoints){
@@ -122,6 +123,7 @@ Output: Enhanced triangulation with:
 
 	zeroMatrix(orientation, nElts, 3);	
 
+	/*
 	int **firstnode = new int*[nElts];
 	for(int i = 0; i < nElts; i++){
 		firstnode[i] = new int[3];
@@ -134,12 +136,29 @@ Output: Enhanced triangulation with:
 			tmp[j + 2*i] = edgebyele[j][i];
 		}
 	}
+	*/
+	
+	Matrix<int> tmp(nElts,3);
+	for(int i = 0; i < nElts; i++){
+		for(int j = 0; j < 3; j++){
+			tmp(i,j) = edgebyele[i][j];
+		}
+	}	
 
+	
+
+	tmp.print();
+
+	// printMatrix(tmp, nElts*3);
+
+	/*
 	for(int i = 0; i < nElts; i++){
 		for(int j = 0; j < 3; j++){
 			firstnode[i][j] = edges[tmp[i+2*j]][0];
 		}
 	}
+
+	printMatrix(firstnode,nElts,3);
 
 	// orientation
 	for(int i = 0; i < nElts; i++){
@@ -160,7 +179,10 @@ Output: Enhanced triangulation with:
 	}
 	delete[] firstnode;
 
+*/
+
 	enhanced = true;
+
 
 }
 
