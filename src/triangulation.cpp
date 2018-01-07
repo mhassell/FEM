@@ -151,31 +151,7 @@ Output: Enhanced triangulation with:
 		}
 	}
 
-/*
-
-	// orientation
-	for(int i = 0; i < nElts; i++){
-		for(int j = 0; j < 3; j++){
-			if(elements[i][j] == firstnode[i][j]){
-				orientation[i][j] = 1;
-			}
-			else{
-				orientation[i][j] = -1;
-			}
-		}
-	}
-	
-	delete[] tmp;
-	
-	for(int i = 0; i < nElts; i++){
-		delete[] firstnode[i];
-	}
-	delete[] firstnode;
-
-*/
-
 	enhanced = true;
-
 
 }
 
@@ -245,8 +221,6 @@ void Triangulation::makeEdges(){
 		}
 	}
 
-	// printMatrix(edges, nEdges, 2);
-
 	for(int i = 0; i < nDirichlet; i++){
 		edges[edgecount][0] = dirichlet[i][0];
 		edges[edgecount][1] = dirichlet[i][1];
@@ -258,8 +232,6 @@ void Triangulation::makeEdges(){
 		edges[edgecount][1] = neumann[i][1];
 		++edgecount;
 	}
-
-	// printMatrix(edges, nEdges, 2);
 
 	// get references into the edge array for interior edges
 	intedge = new int[nInteriorEdges];

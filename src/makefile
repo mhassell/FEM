@@ -6,7 +6,9 @@ scriptTestUtils: utils.hpp scriptTestUtils.cpp
 
 scriptTestMatrix: scriptTestMatrix.cpp matrix.hpp
 	g++ scriptTestMatrix.cpp -o scriptTestMatrix
-	
+
+scriptTestTableQuadTri: tableQuadTri.hpp scriptTestTableQuadTri.cpp
+	g++ -I /usr/local/include/eigen -L /usr/lib scriptTestTableQuadTri.cpp -o scriptTestTableQuadTri
 
 
 
