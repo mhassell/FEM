@@ -40,4 +40,24 @@ int main(){
 	M4 = M;
 	M4.print();
 
+	// matrix multiplication
+	M.reshape(rows,cols);
+	
+	int cols2 = 6;
+	Matrix<int> M5(cols,cols2);
+
+	assert(M5.nrows() == M.ncols());
+	
+	for(int i = 0; i < M5.nrows(); i++){
+		for(int j = 0; j < M5.ncols(); j++){
+			M5(i,j) = 1+2*i+j;
+		}
+	}
+
+	M5.print();
+	
+	Matrix<int> answer = M*M5;
+	answer.print();
+	
+
 }

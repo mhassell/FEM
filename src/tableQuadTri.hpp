@@ -2,7 +2,6 @@
 
 #include "matrix.hpp"
 #include <Eigen/Dense>
-#include <iostream>
 
 // form=tableQuadTri(k)
 //

@@ -27,6 +27,7 @@ class Matrix{
 		~Matrix();
 		Matrix(const Matrix&);  // copy constructor
 		Matrix<T>& operator=(const Matrix&); // copy assignment op
+		Matrix<T> operator*(const Matrix&); // matrix mult operator
 
 	private:
 		int rows;
@@ -146,6 +147,19 @@ void Matrix<T>::reshape(int new_rows, int new_cols){
 
 }
 
+template <typename T>
+void Matrix<T>::zero(){
+
+	assert(rows*cols != 0);
+
+	for(int i = 0; i < rows; i++){
+		for(int j = 0; j < cols; j++){
+			elts[i][j] = 0;
+		}
+	}
+
+}
+
 template <typename T> 
 Matrix<T> Matrix<T>::transpose(){
 
@@ -240,5 +254,29 @@ Matrix<T>& Matrix<T>::operator=(const Matrix<T> &M1){
 
 }
 
+template <typename T>
+Matrix<T> Matrix<T>::operator*(const Matrix& other){
+
+	// check the dimensions are compatible
+	assert(cols == other.rows);
+	int m = rows;
+	int n = cols;
+	int p = other.cols;
+
+	Matrix<T> answer(m,p);
+	answer.zero();
+	
+	// can we do away with accessing the underlying elts array?
+	for(int i = 0; i < m; i++){
+		for(int j = 0; j < p; j++){
+			for(int k = 0; k < n; k++){
+				answer.elts[i][j] += this->elts[i][k] * other.elts[k][j];
+			}
+		}
+	}
+	
+	return answer;
+
+}
 
 #endif

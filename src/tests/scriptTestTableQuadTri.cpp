@@ -5,7 +5,7 @@
 
 int main(){
 
-	int k = 3;
+	int k = 6;
 	Matrix<double> qd = tableQuadTri(k);
 
 	qd.print();
