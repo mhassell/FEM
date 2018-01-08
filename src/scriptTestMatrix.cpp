@@ -41,12 +41,12 @@ int main(){
 	M4.print();
 
 	// matrix multiplication
+	std::cout << "Matrix multiplication\n" << std::endl;	
+
 	M.reshape(rows,cols);
 	
 	int cols2 = 6;
 	Matrix<int> M5(cols,cols2);
-
-	assert(M5.nrows() == M.ncols());
 	
 	for(int i = 0; i < M5.nrows(); i++){
 		for(int j = 0; j < M5.ncols(); j++){
@@ -55,7 +55,8 @@ int main(){
 	}
 
 	M5.print();
-	
+	M.print();	
+
 	Matrix<int> answer = M*M5;
 	answer.print();
 	
