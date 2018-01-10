@@ -36,9 +36,11 @@ int main(){
 	T.neumann[1][0] = 3;
 	T.neumann[1][1] = 0;
 
+	T.RedRefinement();
+
 	int k = 0;
 	Eigen::SparseMatrix<double> Mh = massMatrix(T, k);
 
-	
+
 
 }
