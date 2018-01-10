@@ -10,5 +10,5 @@ scriptTestMatrix: scriptTestMatrix.cpp matrix.hpp
 scriptTestTableQuadTri: tableQuadTri.hpp scriptTestTableQuadTri.cpp
 	g++ -I /usr/local/include/eigen -L /usr/lib scriptTestTableQuadTri.cpp -o scriptTestTableQuadTri
 
-
-
+scriptTestMassMatrix:  Matrices.cpp tableQuadTri.hpp matrix.hpp triangulation.cpp scriptTestMassMatrix.cpp
+	g++ -I /usr/local/include/eigen -L /usr/lib Matrices.cpp tableQuadTri.hpp matrix.hpp triangulation.cpp scriptTestMassMatrix.cpp -o scriptTestMassMatrix

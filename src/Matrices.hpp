@@ -2,8 +2,9 @@
 #define MATRICES_HPP
 
 #include <Eigen/Sparse>
+#include "triangulation.h"
 
-Eigen::SparseMatrix<double> massMatrix();
+Eigen::SparseMatrix<double> massMatrix(const Triangulation &T, int k);
 
 #endif
 
