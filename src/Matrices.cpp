@@ -6,7 +6,7 @@
 #include "triangulation.h"
 #include "Matrices.hpp"
 
-Eigen::SparseMatrix<double> massMatrix(const Triangulation &T, int k){
+Eigen::SparseMatrix<double> massMatrix(double (*c)(double, double), const Triangulation &T, int k){
 
 	Matrix<double> formula = tableQuadTri(2*k+1);
 
@@ -26,8 +26,8 @@ Eigen::SparseMatrix<double> massMatrix(const Triangulation &T, int k){
 		xelts(1,i) = x1(0,T.elements[i][1]);
 		xelts(2,i) = x1(0,T.elements[i][2]);
 		yelts(0,i) = y1(0,T.elements[i][0]);
-		yelts(1,i) = y1(0,T.elements[i][0]);
-		yelts(2,i) = y1(0,T.elements[i][0]);
+		yelts(1,i) = y1(0,T.elements[i][1]);
+		yelts(2,i) = y1(0,T.elements[i][2]);
 	}
 
 	Matrix<double> quadPts(formula.nrows(),3);
@@ -45,6 +45,21 @@ Eigen::SparseMatrix<double> massMatrix(const Triangulation &T, int k){
 	x = quadPts*xelts;
 	y = quadPts*yelts;
 
-	x.print();
+	Matrix<double> cc(formula.nrows(),T.nElts);
+	cc.zero();
 
+	for(int i = 0; i < formula.nrows(); i++){
+		for(int j = 0; j < T.nElts; j++){
+			cc(i,j) = c(x(i,j),y(i,j));
+		}
+	}
+
+	for(int i = 0; i < formula.nrows(); i++){
+		for(int j = 0; j < T.nElts; j++){
+			cc(i,j) = cc(i,j)*T.area[j];
+		}
+	}
+
+	
+	
 }

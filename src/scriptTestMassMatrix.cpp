@@ -2,10 +2,17 @@
 #include "triangulation.h"
 
 #include <iostream>
+#include <functional>
 #include <Eigen/Sparse>
+#include <math.h>
+
+double c(double x, double y){return 1 + pow(x,2) + pow(y,2);};
 
 int main(){
 
+	double (*cp)(double, double) = &c;
+
+	int k = 0;
 	Triangulation T(2,2,2,4);
 
 	T.xcoords[0] = 0.0;
@@ -38,9 +45,8 @@ int main(){
 
 	T.RedRefinement();
 
-	int k = 0;
-	Eigen::SparseMatrix<double> Mh = massMatrix(T, k);
+	Eigen::SparseMatrix<double> Mh = massMatrix(cp, T, k);
 
-
+	
 
 }
