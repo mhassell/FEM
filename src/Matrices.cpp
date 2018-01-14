@@ -1,12 +1,13 @@
 #include <Eigen/Sparse>
 #include <iostream>
+#include <functional>
 
 #include "matrix.hpp"
 #include "tableQuadTri.hpp"
 #include "triangulation.h"
 #include "Matrices.hpp"
 
-Eigen::SparseMatrix<double> massMatrix(double (*c)(double, double), const Triangulation &T, int k){
+Eigen::SparseMatrix<double> massMatrix(std::function<double(double,double)> c, const Triangulation &T, int k){
 
 	Matrix<double> formula = tableQuadTri(2*k+1);
 

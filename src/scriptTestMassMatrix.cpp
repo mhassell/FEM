@@ -6,11 +6,10 @@
 #include <Eigen/Sparse>
 #include <math.h>
 
-double c(double x, double y){return 1 + pow(x,2) + pow(y,2);};
+auto cc = [] (double x, double y){return 1 + pow(x,2) + pow(y,2);};
+std::function<double(double,double)> c = cc;
 
 int main(){
-
-	double (*cp)(double, double) = &c;
 
 	int k = 0;
 	Triangulation T(2,2,2,4);
@@ -45,7 +44,7 @@ int main(){
 
 	T.RedRefinement();
 
-	Eigen::SparseMatrix<double> Mh = massMatrix(cp, T, k);
+	Eigen::SparseMatrix<double> Mh = massMatrix(c, T, k);
 
 	
 
