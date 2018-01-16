@@ -5,6 +5,14 @@
 
 // make the bernstein-bezier basis
 
-Matrix<double>
+struct bb
+{
+
+	Matrix<double> P;
+	Matrix<int> indices;
+
+};
+
+bb bernstein(Matrix<double> x, Matrix<double> y, int k);
 
 #endif
