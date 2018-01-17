@@ -23,3 +23,8 @@ bb bernstein(Matrix<double> x, Matrix<double> y, int k)
 	}
 
 }
+
+void location(int k)
+{
+	
+}

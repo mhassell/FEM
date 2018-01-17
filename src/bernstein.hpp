@@ -9,7 +9,10 @@ struct bb
 {
 
 	Matrix<double> P;
-	Matrix<int> indices;
+	int*** indices;
+	int size1;
+	int size2;
+	int size3;
 
 };
 
