@@ -4,8 +4,8 @@
 
 #include "CMatrix.hpp"           // My header-only matrix class
 #include "tableQuadTri.hpp"		 // 
-#include "triangulation.h"		 // My CTriangulation
-#include "Matrices.hpp"			 // Where FE family matrices are defined
+#include "CTriangulation.h"		 // My CTriangulation
+#include "CMassMatrix.hpp"		 // Where mass matrix is defined
 
 Eigen::SparseMatrix<double> CMmassMatrix(std::function<double(double,double)> c, const Triangulation &T, int k){
 

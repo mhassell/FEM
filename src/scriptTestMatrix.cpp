@@ -1,11 +1,11 @@
-#include "matrix.hpp"
+#include "CMatrix.hpp"
 #include <iostream>
 
 int main(){
 
 	int rows = 5;
 	int cols = 4;
-	Matrix<int> M(rows, cols);
+	CMatrix<int> M(rows, cols);
 
 	for(int i = 0; i < rows; i++){
 		for(int j = 0; j < cols; j++){
@@ -26,17 +26,17 @@ int main(){
 	
 	// this was broken because we needed a copy constructor
 	std::cout << "Transposing and creating a new array " << std::endl;
-	Matrix<int> M2 = M.transpose();
+	CMatrix<int> M2 = M.transpose();
 	M2.print();
 
 	// test copy constructor
 	std::cout << "Test copy constructor" << std::endl;
-	Matrix<int> M3 = M;
+	CMatrix<int> M3 = M;
 	M3.print();
 
 	// test copy assignment operator (and its effects)
 	std::cout << "Test copy assignment operator" << std::endl;
-	Matrix<int> M4;
+	CMatrix<int> M4;
 	M4 = M;
 	M4.print();
 
@@ -46,7 +46,7 @@ int main(){
 	M.reshape(rows,cols);
 	
 	int cols2 = 6;
-	Matrix<int> M5(cols,cols2);
+	CMatrix<int> M5(cols,cols2);
 	
 	for(int i = 0; i < M5.nrows(); i++){
 		for(int j = 0; j < M5.ncols(); j++){
@@ -57,7 +57,7 @@ int main(){
 	M5.print();
 	M.print();	
 
-	Matrix<int> answer = M*M5;
+	CMatrix<int> answer = M*M5;
 	answer.print();
 	
 

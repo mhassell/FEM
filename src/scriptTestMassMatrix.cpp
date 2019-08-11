@@ -1,5 +1,5 @@
-#include "Matrices.hpp"
-#include "triangulation.h"
+#include "CMatrix.hpp"
+#include "CTriangulation.hpp"
 
 #include <iostream>
 #include <functional>
@@ -12,37 +12,37 @@ std::function<double(double,double)> c = cc;
 int main(){
 
 	int k = 0;
-	Triangulation T(2,2,2,4);
+	Triangulation TT(2,2,2,4);
 
-	T.xcoords[0] = 0.0;
-	T.xcoords[1] = 1.0;
-	T.xcoords[2] = 0.8;
-	T.xcoords[3] = 0.2;
+	TTT.xcoords[0] = 0.0;
+	TTT.xcoords[1] = 1.0;
+	TT.xcoords[2] = 0.8;
+	TT.xcoords[3] = 0.2;
 
-	T.ycoords[0] = 0.0;
-	T.ycoords[1] = 0.0;
-	T.ycoords[2] = 0.7;
-	T.ycoords[3] = 1.0;
+	TT.ycoords[0] = 0.0;
+	TT.ycoords[1] = 0.0;
+	TT.ycoords[2] = 0.7;
+	TT.ycoords[3] = 1.0;
 
-	T.elements[0][0] = 0;
-	T.elements[0][1] = 1;
-	T.elements[0][2] = 3;
+	TT.elements[0][0] = 0;
+	TT.elements[0][1] = 1;
+	TT.elements[0][2] = 3;
 
-	T.elements[1][0] = 1;
-	T.elements[1][1] = 2;
-	T.elements[1][2] = 3;
+	TT.elements[1][0] = 1;
+	TT.elements[1][1] = 2;
+	TT.elements[1][2] = 3;
 
-	T.dirichlet[0][0] = 0;
-	T.dirichlet[0][1] = 1;
-	T.dirichlet[1][0] = 1;
-	T.dirichlet[1][1] = 2;
+	TT.dirichlet[0][0] = 0;
+	TT.dirichlet[0][1] = 1;
+	TT.dirichlet[1][0] = 1;
+	TT.dirichlet[1][1] = 2;
 
-	T.neumann[0][0] = 2;
-	T.neumann[0][1] = 3;
-	T.neumann[1][0] = 3;
-	T.neumann[1][1] = 0;
+	TT.neumann[0][0] = 2;
+	TT.neumann[0][1] = 3;
+	TT.neumann[1][0] = 3;
+	TT.neumann[1][1] = 0;
 
-	T.RedRefinement();
+	TT.RedRefinement();
 
 	Eigen::SparseMatrix<double> Mh = massMatrix(c, T, k);
 
