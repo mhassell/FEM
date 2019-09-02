@@ -1,5 +1,5 @@
 # this needs to be written it seems...
-scriptTestTriangulation: CTriangulation.h CTriangulation.cpp scriptTestTriangulation.cpp
+scriptTestTriangulation: CTriangulation.hpp CTriangulation.cpp scriptTestTriangulation.cpp
 	g++ -I /usr/local/include/eigen CTriangulation.cpp scriptTestTriangulation.cpp -o scriptTestTriangulation
 
 # also missing...
