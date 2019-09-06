@@ -36,7 +36,7 @@ class CTriangulation{
 		CTriangulation(int,int,int,int);
 			 
 		// destructor
-		~TCriangulation();
+		~CTriangulation();
 
 	private:
 		void makeEdges();

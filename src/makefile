@@ -1,12 +1,9 @@
-# this needs to be written it seems...
 scriptTestTriangulation: CTriangulation.hpp CTriangulation.cpp scriptTestTriangulation.cpp
 	g++ -I /usr/local/include/eigen CTriangulation.cpp scriptTestTriangulation.cpp -o scriptTestTriangulation
 
-# also missing...
 scriptTestUtils: utils.hpp scriptTestUtils.cpp
 	g++ -I /usr/local/include/eigen scriptTestUtils.cpp -o scriptTestUtils
 
-# this works
 scriptTestMatrix: scriptTestMatrix.cpp CMatrix.hpp
 	g++ scriptTestMatrix.cpp -o scriptTestMatrix
 

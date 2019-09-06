@@ -1,6 +1,6 @@
-#include "CTriangulation.h"
+#include "CTriangulation.hpp"
 #include "utils.hpp"
-#include "matrix.hpp"
+#include "CMatrix.hpp"
 
 // constructors
 CTriangulation::CTriangulation(int nElts, int nDirichlet, int nNeumann, int nPoints){
@@ -123,7 +123,7 @@ Output: Enhanced triangulation with:
 
 	zeroMatrix(orientation, nElts, 3);	
 	
-	Matrix<int> tmp(nElts,3);
+	CMatrix<int> tmp(nElts,3);
 	for(int i = 0; i < nElts; i++){
 		for(int j = 0; j < 3; j++){
 			tmp(i,j) = edgebyele[i][j];
@@ -132,7 +132,7 @@ Output: Enhanced triangulation with:
 
 	tmp.reshape(3*nElts,1);
 
-	Matrix<int> FirstNode(nElts*3,1);
+	CMatrix<int> FirstNode(nElts*3,1);
 
 	for(int i = 0; i < 3*nElts; i++){
 		FirstNode(i,0) = edges[tmp(i,0)][0];
