@@ -1,6 +1,3 @@
-.PHONY: all_tests
-	+$(Make) -C tests/
-
 scriptTestTriangulation: CTriangulation.hpp CTriangulation.cpp scriptTestTriangulation.cpp
 	g++ -I /usr/local/include/eigen CTriangulation.cpp scriptTestTriangulation.cpp -o scriptTestTriangulation
 

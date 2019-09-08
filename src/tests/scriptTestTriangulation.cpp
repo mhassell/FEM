@@ -1,4 +1,4 @@
-#include "triangulation.h"
+#include "CTriangulation.hpp"
 #include "utils.hpp"
 
 #include <iostream>
@@ -6,7 +6,7 @@
 int main()
 {
 
-	Triangulation T(2,2,2,4);
+	CTriangulation T(2,2,2,4);
 
 	T.xcoords[0] = 0.0;
 	T.xcoords[1] = 1.0;
@@ -81,4 +81,3 @@ int main()
 
 
 }
-
