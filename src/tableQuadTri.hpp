@@ -1,6 +1,6 @@
 // triangular quadrature
 
-#include "matrix.hpp"
+#include "CMatrix.hpp"
 #include <Eigen/Dense>
 
 // form=tableQuadTri(k)
@@ -12,7 +12,7 @@
 //             for a formula of degree k in the reference triangle
 //             Remark: sum(weights)=1
 
-Matrix<double> tableQuadTri(int k){
+CMatrix<double> tableQuadTri(int k){
 
 	
 	int sizes[26] = {1,3,3,6,6,10,15,15,21,21,28,28,36,36,45,55,55,66,66,78,78,91,105,105,120,120};
@@ -1292,7 +1292,7 @@ Matrix<double> tableQuadTri(int k){
 	int m = eigenForm.rows();
 	int n = eigenForm.cols();
 
-	Matrix<double> form(m,n);
+	CMatrix<double> form(m,n);
 
 	for(int i = 0; i < m; i++){
 		for(int j = 0; j < n; j++){

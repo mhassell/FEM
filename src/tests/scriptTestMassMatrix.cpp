@@ -1,5 +1,6 @@
 #include "CMatrix.hpp"
 #include "CTriangulation.hpp"
+#include "CMassMatrix.hpp"
 
 #include <iostream>
 #include <functional>
@@ -12,10 +13,10 @@ std::function<double(double,double)> c = cc;
 int main(){
 
 	int k = 0;
-	Triangulation TT(2,2,2,4);
+	CTriangulation TT(2,2,2,4);
 
-	TTT.xcoords[0] = 0.0;
-	TTT.xcoords[1] = 1.0;
+	TT.xcoords[0] = 0.0;
+	TT.xcoords[1] = 1.0;
 	TT.xcoords[2] = 0.8;
 	TT.xcoords[3] = 0.2;
 
@@ -44,7 +45,7 @@ int main(){
 
 	TT.RedRefinement();
 
-	Eigen::SparseMatrix<double> Mh = massMatrix(c, T, k);
+	Eigen::SparseMatrix<double> Mh = CMassMatrix(c, TT, k);
 
 	
 

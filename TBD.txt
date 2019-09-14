@@ -1,6 +1,10 @@
 TBD list to understand what needs to be done.
 Mark tasks that are completed.
 
+Better git stuff to automate tests
+
+Re-learn valgrind and automate tests
+
 Get the boss' FEM code onto the boatanchor laptop for reference
 
 Separate tests into a separate directory and make a script (in make) for building and executing the tests
@@ -8,3 +12,4 @@ Separate tests into a separate directory and make a script (in make) for buildin
 Determine the order to construct and test the functions in FEM
 
 Once structure is more solid start documenting in tex
+

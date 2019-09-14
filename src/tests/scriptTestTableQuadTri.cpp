@@ -1,12 +1,12 @@
 #include "tableQuadTri.hpp"
-#include "matrix.hpp"
+#include "CMatrix.hpp"
 #include <Eigen/Dense>
 #include <iostream>
 
 int main(){
 
 	int k = 6;
-	Matrix<double> qd = tableQuadTri(k);
+	CMatrix<double> qd = tableQuadTri(k);
 
 	qd.print();
 

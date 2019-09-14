@@ -4,23 +4,23 @@
 
 #include "CMatrix.hpp"           // My header-only matrix class
 #include "tableQuadTri.hpp"		 // 
-#include "CTriangulation.h"		 // My CTriangulation
+#include "CTriangulation.hpp"	 // My CTriangulation
 #include "CMassMatrix.hpp"		 // Where mass matrix is defined
 
-Eigen::SparseMatrix<double> CMmassMatrix(std::function<double(double,double)> c, const Triangulation &T, int k){
+Eigen::SparseMatrix<double> CMassMatrix(std::function<double(double,double)> c, const CTriangulation &T, int k){
 
-	Matrix<double> formula = tableQuadTri(2*k+1);
+	CMatrix<double> formula = tableQuadTri(2*k+1);
 
-	Matrix<double> x1(1,T.nPoints);
-	Matrix<double> y1(1,T.nPoints);
+	CMatrix<double> x1(1,T.nPoints);
+	CMatrix<double> y1(1,T.nPoints);
 
 	for(int i = 0; i < T.nPoints; i++){
 		x1(0,i) = T.xcoords[i];
 		y1(0,i) = T.ycoords[i];
 	}
 
-	Matrix<double> xelts(3,T.nElts);
-	Matrix<double> yelts(3,T.nElts);
+	CMatrix<double> xelts(3,T.nElts);
+	CMatrix<double> yelts(3,T.nElts);
 
 	for(int i = 0; i < T.nElts; i++){
 		xelts(0,i) = x1(0,T.elements[i][0]);
@@ -31,22 +31,22 @@ Eigen::SparseMatrix<double> CMmassMatrix(std::function<double(double,double)> c,
 		yelts(2,i) = y1(0,T.elements[i][2]);
 	}
 
-	Matrix<double> quadPts(formula.nrows(),3);
+	CMatrix<double> quadPts(formula.nrows(),3);
 	for(int i = 0; i < formula.nrows(); i++){
 		quadPts(i,0) = formula(i,0);
 		quadPts(i,1) = formula(i,1);
 		quadPts(i,2) = formula(i,2);
 	}
 
-	Matrix<double> x(formula.nrows(),T.nElts);
-	Matrix<double> y(formula.nrows(),T.nElts);
+	CMatrix<double> x(formula.nrows(),T.nElts);
+	CMatrix<double> y(formula.nrows(),T.nElts);
 	x.zero();
 	y.zero();
 
 	x = quadPts*xelts;
 	y = quadPts*yelts;
 
-	Matrix<double> cc(formula.nrows(),T.nElts);
+	CMatrix<double> cc(formula.nrows(),T.nElts);
 	cc.zero();
 
 	for(int i = 0; i < formula.nrows(); i++){

@@ -1,6 +1,6 @@
 // my attempt at an Eigen-style header-only CMatrix class
 
-#ifndef CMatrix_HPP
+#ifndef CMATRIX_HPP
 #define CMATRIX_HPP
 
 #include <iostream>
